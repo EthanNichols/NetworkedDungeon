@@ -15,14 +15,18 @@ int main(void)
 	UDPSocket clientSocket = UDPSocket();
 	clientSocket.BlockProgram(false);
 
-	const char s[] = "Tezting Bullshit";
+	const char s[] = "Testing";
 	clientSocket.Send(serverIP, s, sizeof(s));
 
-	clientSocket.Open(IPAddress(0, 54000));
-
-	char buf[256];
-	clientSocket.Receive(buf, sizeof(buf), NULL);
-	printf("%s", buf);
+	while (true)
+	{
+		char buf[256];
+		if (clientSocket.Receive(buf, sizeof(buf), NULL) > 0)
+		{
+			printf("%s", buf);
+			break;
+		}
+	}
 
 	clientSocket.Close();
 	Winsock::Shutdown();

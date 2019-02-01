@@ -1,14 +1,13 @@
 #include "UDPSocket.h"
-#include <WinSock2.h>
+#include <winsock.h>
 #include <WS2tcpip.h>
 #include <iostream>
 #include <string>
 
 UDPSocket::UDPSocket()
 {
-	socketID = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+	socketID = static_cast<uint32_t>(socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
 }
-
 
 UDPSocket::~UDPSocket()
 {

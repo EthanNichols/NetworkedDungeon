@@ -19,13 +19,12 @@ int main(void)
 
 	while (true)
 	{
-		printf("Listen\n");
-
 		ZeroMemory(buf, 128);
 
 		if (serverSocket.Receive(buf, 128, &senderIP) > 0)
 		{
 			printf("Message recv from %s : %s\n", senderIP.ToString().c_str(), buf);
+			strcat_s(buf, 128, " Return");
 			serverSocket.Send(senderIP, buf, 128);
 			break;
 		}
