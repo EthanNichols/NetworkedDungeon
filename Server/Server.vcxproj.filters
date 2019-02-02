@@ -23,13 +23,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Packets.h">
+    <ClInclude Include="Treasure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Treasure.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

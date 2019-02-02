@@ -17,6 +17,21 @@ Map::~Map()
 	treasures.clear();
 }
 
+uint8_t Map::Width()
+{
+	return width;
+}
+
+uint8_t Map::Height()
+{
+	return height;
+}
+
+std::vector<Treasure*> Map::GetTreasures() const
+{
+	return treasures;
+}
+
 void Map::PlaceTreasure(int maxTreasure)
 {
 	bool* occupied = static_cast<bool*>(malloc(sizeof(bool) * width * height));

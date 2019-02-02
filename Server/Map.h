@@ -10,6 +10,10 @@ public:
 	~Map();
 
 	void Draw();
+	uint8_t Width();
+	uint8_t Height();
+
+	std::vector<Treasure*> GetTreasures() const;
 
 private:
 	int width;

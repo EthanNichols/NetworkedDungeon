@@ -1,9 +1,9 @@
 #include <iostream>
 #include <WS2tcpip.h>
-
 #include "Winsock.h"
 #include "UDPSocket.h"
 #include "IPAddress.h"
+#include "Packets.h"
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -20,10 +20,15 @@ int main(void)
 
 	while (true)
 	{
-		char buf[256];
-		if (clientSocket.Receive(buf, sizeof(buf), NULL) > 0)
+		MapPacket buf;
+		if (clientSocket.Receive(&buf, sizeof(buf), NULL) > 0)
 		{
-			printf("%s", buf);
+			for (int i = 0; i < buf.tilesSent; ++i)
+			{
+				COORD cord = { static_cast<SHORT>(buf.tiles[i].x + 1), static_cast<SHORT>(buf.tiles[i].y + 1) };
+				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
+				printf("%c", buf.tiles[i].tileChar);
+			}
 			break;
 		}
 	}
