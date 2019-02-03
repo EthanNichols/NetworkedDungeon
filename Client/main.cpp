@@ -4,6 +4,7 @@
 #include "UDPSocket.h"
 #include "IPAddress.h"
 #include "Packets.h"
+#include "Dungeon.h"
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -15,21 +16,28 @@ int main(void)
 	UDPSocket clientSocket = UDPSocket();
 	clientSocket.BlockProgram(false);
 
-	const char s[] = "Testing";
-	clientSocket.Send(serverIP, s, sizeof(s));
+	Dungeon map;
+
+	Command sendCMD;
+	Command recvCMD;
+	sendCMD.cmd = GetMapData;
+
+	clientSocket.Send(serverIP, &sendCMD, MAX_PACKET_SIZE);
 
 	while (true)
 	{
-		MapPacket buf;
-		if (clientSocket.Receive(&buf, sizeof(buf), NULL) > 0)
+		ZeroMemory(&recvCMD, sizeof(recvCMD));
+
+		if (clientSocket.Receive(&recvCMD, sizeof(recvCMD), NULL) > 0)
 		{
-			for (int i = 0; i < buf.tilesSent; ++i)
+			switch (recvCMD.cmd)
 			{
-				COORD cord = { static_cast<SHORT>(buf.tiles[i].x + 1), static_cast<SHORT>(buf.tiles[i].y + 1) };
-				SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
-				printf("%c", buf.tiles[i].tileChar);
+			case GetMapData:
+				MapDataPacket mapData = *(reinterpret_cast<MapDataPacket*>(recvCMD.payload));
+				map.SetSize(mapData.width, mapData.height);
+				map.AddTiles(mapData.tiles, mapData.tilesSent);
+				map.Draw();
 			}
-			break;
 		}
 	}
 

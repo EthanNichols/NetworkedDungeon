@@ -6,7 +6,7 @@
 #include "IPAddress.h"
 #include "Winsock.h"
 #include "Packets.h"
-#include "Map.h"
+#include "Dungeon.h"
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -14,7 +14,7 @@ int main(void)
 {
 	srand(static_cast<unsigned int>(time(NULL)));
 
-	Map map = Map(20, 20, 20);
+	Dungeon map = Dungeon(10, 10, 20);
 	map.Draw();
 
 	Winsock::Init();
@@ -24,31 +24,29 @@ int main(void)
 	serverSocket.BlockProgram(false);
 
 	IPAddress senderIP;
-	char buf[128];
-
-	MapPacket mapTreasures;
-	mapTreasures.width = map.Width();
-	mapTreasures.height = map.Height();
-
-	std::vector<Treasure*> treasures = map.GetTreasures();
-	ZeroMemory(mapTreasures.tiles, sizeof(mapTreasures.tiles));
-
-	mapTreasures.tilesSent = treasures.size();
-
-	for (uint16_t i = 0; i < treasures.size(); ++i)
-	{
-		mapTreasures.tiles[i].tileChar = '!';
-		mapTreasures.tiles[i].x = treasures[i]->x;
-		mapTreasures.tiles[i].y = treasures[i]->y;
-	}
+	Command sendCMD;
+	Command recvCMD;
 
 	while (true)
 	{
-		ZeroMemory(buf, 128);
+		ZeroMemory(&recvCMD, sizeof(recvCMD));
 
-		if (serverSocket.Receive(buf, 128, &senderIP) > 0)
+		if (serverSocket.Receive(&recvCMD, sizeof(recvCMD), &senderIP) > 0)
 		{
-			serverSocket.Send(senderIP, static_cast<const void*>(&mapTreasures), sizeof(mapTreasures));
+			switch (recvCMD.cmd)
+			{
+			case GetMapData:
+
+				MapDataPacket mapData = { map.Width(), map.Height() };
+				std::vector<TileData> tiles = map.GetTiles();
+				mapData.tilesSent = static_cast<uint8_t>(tiles.size());
+				std::copy(tiles.begin(), tiles.end(), mapData.tiles);
+
+				sendCMD.cmd = GetMapData;
+				memcpy_s(sendCMD.payload, MAX_PACKET_SIZE, reinterpret_cast<char*>(&mapData), sizeof(mapData));
+
+				serverSocket.Send(senderIP, &sendCMD, sizeof(sendCMD));
+			}
 		}
 	}
 

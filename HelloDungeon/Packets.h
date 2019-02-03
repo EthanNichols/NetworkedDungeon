@@ -1,30 +1,37 @@
 #pragma once
 
 #include <stdint.h>
+#include "Dungeon.h"
+
+#define MAX_PACKET_SIZE 1400
+
+enum Commands
+{
+	GetMapData,
+	EnterDungeon,
+	LeaveDungeon,
+	Move,
+	Inspect,
+	GetTreasure,
+	TreasureAMT,
+};
 
 struct Command
 {
 	unsigned char cmd;
-	char payload[256];
+	char payload[MAX_PACKET_SIZE];
 };
 
 struct Status
 {
 	unsigned char status;
-	char payload[256];
+	char payload[MAX_PACKET_SIZE];
 };
 
-struct TilePacket
-{
-	uint8_t x;
-	uint8_t y;
-	char tileChar;
-};
-
-struct MapPacket
+struct MapDataPacket
 {
 	uint8_t width;
 	uint8_t height;
 	uint8_t tilesSent;
-	TilePacket tiles[256];
+	TileData tiles[256];
 };
