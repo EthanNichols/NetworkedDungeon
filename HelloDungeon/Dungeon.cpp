@@ -1,8 +1,9 @@
 #include "Dungeon.h"
 #include <Windows.h>
 #include <iostream>
+#include "ConsolePrint.h"
 
-#define TILE_WALL static_cast<uint8_t>(219)
+#define TILE_WALL 219
 #define TILE_TREASURE '$'
 #define TILE_PLAYER '@'
 
@@ -69,27 +70,15 @@ void Dungeon::Draw() const
 
 void Dungeon::DrawBorders() const
 {
-	COORD cord;
-
 	for (int x = 0; x < width + 2; ++x)
 	{
-		cord = { static_cast<SHORT>(x), static_cast<SHORT>(0) };
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
-		printf("%c", TILE_WALL);
-
-		cord = { static_cast<SHORT>(x), static_cast<SHORT>(height + 1) };
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
-		printf("%c", TILE_WALL);
+		Console::Print(TILE_WALL, x, 0);
+		Console::Print(TILE_WALL, x, height + 1);
 	}
 	for (int y = 0; y < height + 2; ++y)
 	{
-		cord = { static_cast<SHORT>(0), static_cast<SHORT>(y) };
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
-		printf("%c", TILE_WALL);
-
-		cord = { static_cast<SHORT>(width + 1), static_cast<SHORT>(y) };
-		SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), cord);
-		printf("%c", TILE_WALL);
+		Console::Print(TILE_WALL, 0, y);
+		Console::Print(TILE_WALL, width + 1, y);
 	}
 }
 
@@ -118,6 +107,6 @@ void Dungeon::DrawTiles() const
 			continue;
 		}
 
-		printf("%c", tileChar);
+		Console::Print(tileChar, static_cast<uint8_t>(cord.X), static_cast<uint8_t>(cord.Y));
 	}
 }
