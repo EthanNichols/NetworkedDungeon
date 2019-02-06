@@ -16,6 +16,20 @@ enum Commands
 	TreasureAMT,
 };
 
+enum Moves
+{
+	MoveUp,
+	MoveLeft,
+	MoveRight,
+	MoveDown,
+};
+
+enum Statuses
+{
+	MapData,
+	Disconnect,
+};
+
 struct Command
 {
 	unsigned char cmd;
@@ -33,5 +47,19 @@ struct MapDataPacket
 	uint8_t width;
 	uint8_t height;
 	uint8_t tilesSent;
-	TileData tiles[256];
+	TileData tiles[32];
+
+	MapDataPacket()
+	{
+		width = 0;
+		height = 0;
+		tilesSent = 0;
+	}
+
+	MapDataPacket(uint8_t width, uint8_t height)
+	{
+		this->width = width;
+		this->height = height;
+		tilesSent = 0;
+	}
 };

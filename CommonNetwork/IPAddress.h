@@ -27,6 +27,8 @@ public:
 	uint16_t GetPort() const;
 	std::string ToString() const;
 
+	int operator==(IPAddress rhs);
+
 private:
 	uint32_t address;
 	uint16_t port;

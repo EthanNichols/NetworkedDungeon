@@ -34,3 +34,14 @@ std::string IPAddress::ToString() const
 
 	return strOut;
 }
+
+int IPAddress::operator==(IPAddress rhs)
+{
+	if (rhs.port == port &&
+		rhs.address == address)
+	{
+		return 1;
+	}
+
+	return 0;
+}
