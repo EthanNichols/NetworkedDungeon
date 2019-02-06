@@ -16,14 +16,6 @@ enum Commands
 	TreasureAMT,
 };
 
-enum Moves
-{
-	MoveUp,
-	MoveLeft,
-	MoveRight,
-	MoveDown,
-};
-
 enum Statuses
 {
 	MapData,
@@ -44,9 +36,9 @@ struct Status
 
 struct MapDataPacket
 {
-	uint8_t width;
-	uint8_t height;
-	uint8_t tilesSent;
+	int width;
+	int height;
+	int tilesSent;
 	TileData tiles[32];
 
 	MapDataPacket()
@@ -56,7 +48,7 @@ struct MapDataPacket
 		tilesSent = 0;
 	}
 
-	MapDataPacket(uint8_t width, uint8_t height)
+	MapDataPacket(int width, int height)
 	{
 		this->width = width;
 		this->height = height;

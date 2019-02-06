@@ -15,11 +15,11 @@ public:
 	void Close();
 	void BlockProgram(bool block);
 
-	int16_t Send(const IPAddress& ipAddress, const void* data, uint16_t size);
-	int16_t Receive(void* data, uint16_t size, IPAddress* senderIP);
+	int Send(const IPAddress& ipAddress, const void* data, int size);
+	int Receive(void* data, int size, IPAddress* senderIP);
 
 private:
 
-	uint32_t socketID;
+	int socketID;
 };
 

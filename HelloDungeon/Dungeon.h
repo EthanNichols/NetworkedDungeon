@@ -13,9 +13,9 @@ enum TileTypes
 
 struct TileData
 {
-	uint8_t x;
-	uint8_t y;
-	uint8_t tileType;
+	int x;
+	int y;
+	int tileType;
 
 	TileData()
 	{
@@ -24,7 +24,7 @@ struct TileData
 		tileType = 0;
 	}
 
-	TileData(uint8_t x, uint8_t y, uint8_t tileType)
+	TileData(int x, int y, int tileType)
 	{
 		this->x = x;
 		this->y = y;
@@ -37,19 +37,21 @@ class Dungeon
 public:
 
 	Dungeon();
-	Dungeon(uint8_t width, uint8_t height, uint8_t maxTreasure);
+	Dungeon(int width, int height, int maxTreasure);
 	~Dungeon();
 
-	void SetSize(uint8_t width, uint8_t height);
+	void SetSize(int width, int height);
 	void AddTile(TileData);
 	void AddTiles(std::vector<TileData> tiles);
-	void AddTiles(TileData* tiles, uint8_t amount);
-	void RemoveTile(uint8_t x, uint8_t y);
+	void AddTiles(TileData* tiles, int amount);
+	void RemoveTile(int x, int y);
+	void SetTiles(TileData* tiles, int amount);
+	void SetTiles(std::vector<TileData> tiles);
 
-	bool Collision(uint8_t x, uint8_t y);
+	bool Collision(int x, int y);
 
-	uint8_t Width() const;
-	uint8_t Height() const;
+	int Width() const;
+	int Height() const;
 	std::vector<TileData> GetTiles();
 
 	void Draw();
@@ -61,6 +63,6 @@ private:
 	int height;
 
 	std::vector<TileData> tiles;
-	std::map<uint16_t, TileData> tilePositions;
+	std::map<int, TileData> tilePositions;
 };
 

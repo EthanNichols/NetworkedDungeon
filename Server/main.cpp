@@ -20,7 +20,7 @@ void SendUpdatedMap(UDPSocket* serverSocket)
 
 	MapDataPacket mapData = { map.Width(), map.Height() };
 	std::vector<TileData> tiles = map.GetTiles();
-	mapData.tilesSent = static_cast<uint8_t>(tiles.size());
+	mapData.tilesSent = static_cast<int>(tiles.size());
 	std::copy(tiles.begin(), tiles.end(), mapData.tiles);
 
 	sendStatus.status = MapData;
@@ -75,6 +75,18 @@ void ClientLeaveDungeon(IPAddress client, UDPSocket* serverSocket)
 	serverSocket->Send(client, &sendStatus, sizeof(sendStatus));
 }
 
+void ClientMovePlayer(IPAddress client, int x, int y)
+{
+	for (int i = 0; i < static_cast<int>(players.size()); ++i)
+	{
+		if (players[i]->GetClientIP() == client)
+		{
+			players[i]->RelativeMove(x, y);
+			return;
+		}
+	}
+}
+
 int main(void)
 {
 	srand(static_cast<unsigned int>(time(NULL)));
@@ -98,33 +110,34 @@ int main(void)
 			switch (recvCMD.cmd)
 			{
 			case Move:
-				if (recvCMD.payload == "UP")
+				if (strcmp(recvCMD.payload, "UP") == 0)
 				{
-
+					ClientMovePlayer(senderIP, 0, -1);
 				}
-				else if (recvCMD.payload == "DOWN")
+				else if (strcmp(recvCMD.payload, "DOWN") == 0)
 				{
-
+					ClientMovePlayer(senderIP, 0, 1);
 				}
-				else if (recvCMD.payload == "RIGHT")
+				else if (strcmp(recvCMD.payload, "RIGHT") == 0)
 				{
-
+					ClientMovePlayer(senderIP, 1, 0);
 				}
-				else if (recvCMD.payload == "LEFT")
+				else if (strcmp(recvCMD.payload, "LEFT") == 0)
 				{
-
+					ClientMovePlayer(senderIP, -1, 0);
 				}
+				break;
 			case LeaveDungeon:
 				ClientLeaveDungeon(senderIP, &serverSocket);
-				SendUpdatedMap(&serverSocket);
 				break;
 			case EnterDungeon:
-
 				ClientEnterDungeon(senderIP);
-				SendUpdatedMap(&serverSocket);
+				break;
+			default:
 				break;
 			}
 			ZeroMemory(&recvCMD, sizeof(recvCMD));
+			SendUpdatedMap(&serverSocket);
 			//map.Draw();
 		}
 	}

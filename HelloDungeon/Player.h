@@ -12,21 +12,21 @@ public:
 
 	void Spawn();
 	IPAddress GetClientIP() const;
-	uint8_t GetXPosition() const;
-	uint8_t GetYPosition() const;
-	uint32_t PickupTreasure();
-	uint16_t GetTreasureAmount() const;
+	int GetXPosition() const;
+	int GetYPosition() const;
+	int PickupTreasure();
+	int GetTreasureAmount() const;
 
-	void RelativeMove(uint8_t x, uint8_t y);
-	void MoveTo(uint8_t x, uint8_t y);
+	void RelativeMove(int x, int y);
+	void MoveTo(int x, int y);
 
 private:
 
 	IPAddress clientIP;
 	Dungeon* map;
 
-	uint8_t x;
-	uint8_t y;
-	uint16_t treasureAmount;
+	int x;
+	int y;
+	int treasureAmount;
 };
 

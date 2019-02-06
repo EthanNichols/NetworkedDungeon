@@ -21,7 +21,7 @@ void Player::Spawn()
 		y = rand() % map->Height();
 	} while (map->Collision(x, y));
 
-	map->AddTile({ x, y, TileTypes::PlayerTile });
+	map->AddTile(TileData(x, y, TileTypes::PlayerTile));
 }
 
 IPAddress Player::GetClientIP() const
@@ -29,27 +29,27 @@ IPAddress Player::GetClientIP() const
 	return clientIP;
 }
 
-uint8_t Player::GetXPosition() const
+int Player::GetXPosition() const
 {
 	return x;
 }
 
-uint8_t Player::GetYPosition() const
+int Player::GetYPosition() const
 {
 	return y;
 }
 
-uint32_t Player::PickupTreasure()
+int Player::PickupTreasure()
 {
-	return uint32_t();
+	return int();
 }
 
-uint16_t Player::GetTreasureAmount() const
+int Player::GetTreasureAmount() const
 {
 	return treasureAmount;
 }
 
-void Player::RelativeMove(uint8_t x, uint8_t y)
+void Player::RelativeMove(int x, int y)
 {
 	if (map->Collision(this->x + x, this->y + y))
 	{
@@ -57,12 +57,14 @@ void Player::RelativeMove(uint8_t x, uint8_t y)
 	}
 	else
 	{
+		map->RemoveTile(this->x, this->y);
 		this->x += x;
 		this->y += y;
+		map->AddTile(TileData(this->x, this->y, PlayerTile));
 	}
 }
 
-void Player::MoveTo(uint8_t x, uint8_t y)
+void Player::MoveTo(int x, int y)
 {
 	if (map->Collision(x, y))
 	{

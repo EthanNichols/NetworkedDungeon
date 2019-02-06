@@ -2,41 +2,41 @@
 
 #pragma region Set Functions
 
-inline void IPAddress::SetAddress(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
+inline void IPAddress::SetAddress(int a, int b, int c, int d)
 {
 	address = (a << 24) + (b << 16) + (c << 8) + d;
 }
 
-inline void IPAddress::SetAddress(uint32_t address)
+inline void IPAddress::SetAddress(int address)
 {
 	this->address = address;
 }
 
-inline void IPAddress::SetA(uint8_t val)
+inline void IPAddress::SetA(int val)
 {
 	address ^= GetA() << 24;
 	address += val << 24;
 }
 
-inline void IPAddress::SetB(uint8_t val)
+inline void IPAddress::SetB(int val)
 {
 	address ^= GetB() << 24;
 	address += val << 24;
 }
 
-inline void IPAddress::SetC(uint8_t val)
+inline void IPAddress::SetC(int val)
 {
 	address ^= GetC() << 24;
 	address += val << 24;
 }
 
-inline void IPAddress::SetD(uint8_t val)
+inline void IPAddress::SetD(int val)
 {
 	address ^= GetD() << 24;
 	address += val << 24;
 }
 
-inline void IPAddress::SetIPPort(uint16_t port)
+inline void IPAddress::SetIPPort(int port)
 {
 	this->port = port;
 }
@@ -45,36 +45,36 @@ inline void IPAddress::SetIPPort(uint16_t port)
 
 #pragma region Get Functions
 
-inline uint32_t IPAddress::GetAddress() const
+inline int IPAddress::GetAddress() const
 {
 	return address;
 }
 
-inline uint8_t IPAddress::GetA() const
+inline int IPAddress::GetA() const
 {
-	uint32_t mask = 0xFF << 24;
+	int mask = 0xFF << 24;
 	return (address & mask) >> 24;
 }
 
-inline uint8_t IPAddress::GetB() const
+inline int IPAddress::GetB() const
 {
-	uint32_t mask = 0xFF << 16;
+	int mask = 0xFF << 16;
 	return (address & mask) >> 16;
 }
 
-inline uint8_t IPAddress::GetC() const
+inline int IPAddress::GetC() const
 {
-	uint32_t mask = 0xFF << 8;
+	int mask = 0xFF << 8;
 	return (address & mask) >> 8;
 }
 
-inline uint8_t IPAddress::GetD() const
+inline int IPAddress::GetD() const
 {
-	uint32_t mask = 0xFF;
+	int mask = 0xFF;
 	return address & mask;
 }
 
-inline uint16_t IPAddress::GetPort() const
+inline int IPAddress::GetPort() const
 {
 	return port;
 }

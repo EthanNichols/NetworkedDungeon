@@ -11,14 +11,14 @@ Dungeon::Dungeon()
 {
 }
 
-Dungeon::Dungeon(uint8_t width, uint8_t height, uint8_t maxTreasures)
+Dungeon::Dungeon(int width, int height, int maxTreasures)
 {
 	this->width = width;
 	this->height = height;
 
-	tilePositions.insert(std::pair<uint16_t, TileData>(0, TileData(0, 0, 0)));
-	tilePositions.insert(std::pair<uint16_t, TileData>(1, TileData(1, 0, 1)));
-	tilePositions.insert(std::pair<uint16_t, TileData>(2, TileData(2, 0, 2)));
+	tilePositions.insert(std::pair<int, TileData>(0, TileData(0, 0, 0)));
+	tilePositions.insert(std::pair<int, TileData>(1, TileData(1, 0, 1)));
+	tilePositions.insert(std::pair<int, TileData>(2, TileData(2, 0, 2)));
 }
 
 
@@ -26,7 +26,7 @@ Dungeon::~Dungeon()
 {
 }
 
-void Dungeon::SetSize(uint8_t width, uint8_t height)
+void Dungeon::SetSize(int width, int height)
 {
 	this->width = width;
 	this->height = height;
@@ -34,35 +34,46 @@ void Dungeon::SetSize(uint8_t width, uint8_t height)
 
 void Dungeon::AddTile(TileData tile)
 {
-	tilePositions.insert(std::pair<uint16_t, TileData>(tile.x + tile.y * width, tile));
+	tilePositions.insert(std::pair<int, TileData>(tile.x + tile.y * width, tile));
 }
 
 void Dungeon::AddTiles(std::vector<TileData> tiles)
 {
 	for (int i = 0; i < static_cast<int>(tiles.size()); ++i)
 	{
-		tilePositions.insert(std::pair<uint16_t, TileData>(tiles[i].x + tiles[i].y * width, tiles[i]));
+		tilePositions.insert(std::pair<int, TileData>(tiles[i].x + tiles[i].y * width, tiles[i]));
 	}
 }
 
-void Dungeon::AddTiles(TileData* tiles, uint8_t amount)
+void Dungeon::AddTiles(TileData* tiles, int amount)
 {
 	for (int i = 0; i < amount; ++i)
 	{
-		tilePositions.insert(std::pair<uint16_t, TileData>(tiles[i].x + tiles[i].y * width, tiles[i]));
+		tilePositions.insert(std::pair<int, TileData>(tiles[i].x + tiles[i].y * width, tiles[i]));
 	}
 }
 
-void Dungeon::RemoveTile(uint8_t x, uint8_t y)
+void Dungeon::SetTiles(TileData* tiles, int amount)
 {
-	tilePositions.erase(tilePositions.find(x + y * width));
-	Console::Print(' ', x+1, y+1);
+	tilePositions.clear();
+	AddTiles(tiles, amount);
 }
 
-bool Dungeon::Collision(uint8_t x, uint8_t y)
+void Dungeon::SetTiles(std::vector<TileData> tiles)
 {
-	if (x <= 0 || x >= width ||
-		y <= 0 || y >= height)
+	tilePositions.clear();
+	AddTiles(tiles);
+}
+
+void Dungeon::RemoveTile(int x, int y)
+{
+	tilePositions.erase(tilePositions.find(x + y * width));
+}
+
+bool Dungeon::Collision(int x, int y)
+{
+	if (x < 0 || x >= width ||
+		y < 0 || y >= height)
 	{
 		return true;
 	}
@@ -70,19 +81,19 @@ bool Dungeon::Collision(uint8_t x, uint8_t y)
 	return tilePositions.count(x + y * width);
 }
 
-uint8_t Dungeon::Width() const
+int Dungeon::Width() const
 {
 	return width;
 }
 
-uint8_t Dungeon::Height() const
+int Dungeon::Height() const
 {
 	return width;
 }
 
 std::vector<TileData> Dungeon::GetTiles()
 {
-	std::map<uint16_t, TileData>::const_iterator it;
+	std::map<int, TileData>::const_iterator it;
 
 	tiles.clear();
 
@@ -141,6 +152,6 @@ void Dungeon::DrawTiles() const
 			continue;
 		}
 
-		Console::Print(tileChar, static_cast<uint8_t>(cord.X), static_cast<uint8_t>(cord.Y));
+		Console::Print(tileChar, static_cast<int>(cord.X), static_cast<int>(cord.Y));
 	}
 }

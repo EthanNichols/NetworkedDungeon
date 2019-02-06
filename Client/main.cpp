@@ -16,7 +16,7 @@
 UDPSocket* localSocket;
 IPAddress serverIP;
 
-uint8_t inputLine = 0;
+int inputLine = 0;
 bool stopThreads = false;
 #define ENTER_KEY 13
 
@@ -38,27 +38,17 @@ void SendCommand(std::string command)
 	{
 		sendCMD.cmd = LeaveDungeon;
 	}
-	else if (strcmp(command.substr(0, command.find(' ')).c_str(), "MOVE") == 0)
+	else if (strcmp(command.substr(0, 4).c_str(), "MOVE") == 0)
 	{
 		sendCMD.cmd = Move;
 		int splitPos = command.find(' ');
 
-		if (strcmp(command.substr(splitPos, command.length() - splitPos).c_str(), "UP"))
+		if (splitPos == std::string::npos)
 		{
-			*sendCMD.payload = MoveUp;
+			return;
 		}
-		else if (strcmp(command.substr(splitPos, command.length() - splitPos).c_str(), "DOWN"))
-		{
-			*sendCMD.payload = MoveDown;
-		}
-		else if (strcmp(command.substr(splitPos, command.length() - splitPos).c_str(), "LEFT"))
-		{
-			*sendCMD.payload = MoveLeft;
-		}
-		else if (strcmp(command.substr(splitPos, command.length() - splitPos).c_str(), "RIGHT"))
-		{
-			*sendCMD.payload = MoveRight;
-		}
+
+		strcpy_s(sendCMD.payload, sizeof(sendCMD.payload), command.substr(splitPos+1, command.length()).c_str());
 	}
 	else if (strcmp(command.c_str(), "GET TREASURE") == 0)
 	{
@@ -67,6 +57,10 @@ void SendCommand(std::string command)
 	else if (strcmp(command.c_str(), "TREASURE AMOUNT") == 0)
 	{
 		sendCMD.cmd = TreasureAMT;
+	}
+	else
+	{
+		return;
 	}
 
 	localSocket->Send(serverIP, &sendCMD, MAX_PACKET_SIZE);
@@ -134,10 +128,10 @@ int main(void)
 
 			switch (recvStatus.status)
 			{
-			case GetMapData:
+			case MapData:
 				mapData = *(reinterpret_cast<MapDataPacket*>(recvStatus.payload));
 				map.SetSize(mapData.width, mapData.height);
-				map.AddTiles(mapData.tiles, mapData.tilesSent);
+				map.SetTiles(mapData.tiles, mapData.tilesSent);
 				map.Draw();
 
 				inputLine = mapData.height + 4;
@@ -146,6 +140,8 @@ int main(void)
 				printf("Leaving");
 				disconnect = true;
 				stopThreads = true;
+				break;
+			default:
 				break;
 			}
 		}

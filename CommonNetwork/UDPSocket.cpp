@@ -6,7 +6,7 @@
 
 UDPSocket::UDPSocket()
 {
-	socketID = static_cast<uint32_t>(socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
+	socketID = static_cast<int>(socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
 }
 
 UDPSocket::~UDPSocket()
@@ -44,7 +44,7 @@ void UDPSocket::BlockProgram(bool block)
 	int error = ioctlsocket(socketID, FIONBIO, &blockI);
 }
 
-int16_t UDPSocket::Send(const IPAddress& ipAddress, const void* data, uint16_t size)
+int UDPSocket::Send(const IPAddress& ipAddress, const void* data, int size)
 {
 	sockaddr_in sendHints;
 	sendHints.sin_family = AF_INET;
@@ -54,18 +54,18 @@ int16_t UDPSocket::Send(const IPAddress& ipAddress, const void* data, uint16_t s
 	return sendto(socketID, reinterpret_cast<const char*>(data), size, 0, (sockaddr*)&sendHints, sizeof(sendHints));
 }
 
-int16_t UDPSocket::Receive(void* data, uint16_t size, IPAddress* senderIP)
+int UDPSocket::Receive(void* data, int size, IPAddress* senderIP)
 {
 	sockaddr_in sender;
 	int senderSize = sizeof(sender);
 
-	int16_t recvStatus = recvfrom(socketID, reinterpret_cast<char*>(data), size, 0, (sockaddr*)&sender, &senderSize);
+	int recvStatus = recvfrom(socketID, reinterpret_cast<char*>(data), size, 0, (sockaddr*)&sender, &senderSize);
 
 	if (senderIP != NULL)
 	{
 		inet_ntop(AF_INET, &sender.sin_addr, NULL, NULL);
-		senderIP->SetAddress(static_cast<uint32_t>(ntohl(sender.sin_addr.S_un.S_addr)));
-		senderIP->SetIPPort(static_cast<uint16_t>(ntohs(sender.sin_port)));
+		senderIP->SetAddress(static_cast<int>(ntohl(sender.sin_addr.S_un.S_addr)));
+		senderIP->SetIPPort(static_cast<int>(ntohs(sender.sin_port)));
 	}
 	return recvStatus;
 }
