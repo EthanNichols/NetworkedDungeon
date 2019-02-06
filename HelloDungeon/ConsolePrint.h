@@ -8,6 +8,7 @@ class Console
 {
 public:
 	static void Print(char c, SHORT x, SHORT y);
+	static void Print(const char* c, SHORT x, SHORT y);
 
 private:
 	static std::mutex consoleMutex;

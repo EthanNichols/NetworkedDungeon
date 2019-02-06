@@ -11,14 +11,13 @@ Dungeon::Dungeon()
 {
 }
 
-Dungeon::Dungeon(int width, int height, int maxTreasures)
+Dungeon::Dungeon(int width, int height, int maxTreasureValue, int maxTreasures)
 {
 	this->width = width;
 	this->height = height;
 
-	tilePositions.insert(std::pair<int, TileData>(0, TileData(0, 0, 0)));
-	tilePositions.insert(std::pair<int, TileData>(1, TileData(1, 0, 1)));
-	tilePositions.insert(std::pair<int, TileData>(2, TileData(2, 0, 2)));
+	treasure = Treasure(maxTreasureValue);
+	SpawnTreasure(maxTreasures);
 }
 
 
@@ -91,6 +90,32 @@ int Dungeon::Height() const
 	return width;
 }
 
+void Dungeon::SpawnTreasure(int amount)
+{
+	for (int i = 0; i < amount; ++i)
+	{
+		int x = rand() % width;
+		int y = rand() % height;
+
+		while (Collision(x, y))
+		{
+			x++;
+			if (x >= width)
+			{
+				y++;
+				x = 0;
+
+				if (y >= height)
+				{
+					y = 0;
+				}
+			}
+		}
+
+		AddTile(TileData(x, y, TreasureTile));
+	}
+}
+
 std::vector<TileData> Dungeon::GetTiles()
 {
 	std::map<int, TileData>::const_iterator it;
@@ -103,6 +128,15 @@ std::vector<TileData> Dungeon::GetTiles()
 	}
 
 	return tiles;
+}
+
+TileTypes Dungeon::GetTileType(int x, int y)
+{
+	if (tilePositions.count(x + y * width) > 0)
+	{
+		return tilePositions.at(x + y * width).tileType;
+	}
+	return NoneTile;
 }
 
 void Dungeon::Draw()

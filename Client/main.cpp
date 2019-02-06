@@ -102,6 +102,8 @@ int main(void)
 {
 	std::thread inputThread(ProcessInput);
 
+	std::string collectTreasureString = "Treasure Collected: ";
+
 	Winsock::Init();
 
 	serverIP = IPAddress(127, 0, 0, 1, 54000);
@@ -124,8 +126,6 @@ int main(void)
 
 		if (clientSocket.Receive(&recvStatus, sizeof(recvStatus), NULL) > 0)
 		{
-			printf("recieved");
-
 			switch (recvStatus.status)
 			{
 			case MapData:
@@ -137,9 +137,12 @@ int main(void)
 				inputLine = mapData.height + 4;
 				break;
 			case Disconnect:
-				printf("Leaving");
 				disconnect = true;
 				stopThreads = true;
+				break;
+			case TreasureAMT:
+				collectTreasureString += std::to_string(reinterpret_cast<int>(recvStatus.payload));
+				Console::Print(collectTreasureString.c_str(), 0, inputLine - 2);
 				break;
 			default:
 				break;
@@ -150,7 +153,5 @@ int main(void)
 	inputThread.join();
 	clientSocket.Close();
 	Winsock::Shutdown();
-
-	getchar();
 	return 0;
 }

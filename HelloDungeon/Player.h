@@ -14,7 +14,7 @@ public:
 	IPAddress GetClientIP() const;
 	int GetXPosition() const;
 	int GetYPosition() const;
-	int PickupTreasure();
+	bool PickupTreasure();
 	int GetTreasureAmount() const;
 
 	void RelativeMove(int x, int y);

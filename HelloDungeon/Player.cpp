@@ -15,13 +15,27 @@ Player::~Player()
 
 void Player::Spawn()
 {
-	do
-	{
-		x = rand() % map->Width();
-		y = rand() % map->Height();
-	} while (map->Collision(x, y));
+	x = rand() % map->Width();
+	y = rand() % map->Height();
 
-	map->AddTile(TileData(x, y, TileTypes::PlayerTile));
+	while (map->Collision(x, y))
+	{
+		x++;
+		if (x >= map->Width())
+		{
+			y++;
+			x = 0;
+
+			if (y >= map->Height())
+			{
+				y = 0;
+			}
+		}
+	}
+
+	x = 2;
+	y = 1;
+	map->AddTile(TileData(2, 1, TileTypes::PlayerTile));
 }
 
 IPAddress Player::GetClientIP() const
@@ -39,9 +53,38 @@ int Player::GetYPosition() const
 	return y;
 }
 
-int Player::PickupTreasure()
+bool Player::PickupTreasure()
 {
-	return int();
+	bool treasureFound = false;
+
+	for (int x = -1; x <= 1; ++x)
+	{
+		if (treasureFound)
+		{
+			break;
+		}
+
+		for (int y = -1; y <= 1; ++y)
+		{
+			if ((x != 0 && y != 0) ||
+				(x == 0 && y == 0))
+			{
+				continue;
+			}
+			else
+			{
+				if (map->GetTileType(this->x + x, this->y + y) == TreasureTile)
+				{
+					map->RemoveTile(this->x + x, this->y + y);
+					treasureFound = true;
+					treasureAmount += map->treasure.GetValue();
+					break;
+				}
+			}
+		}
+	}
+
+	return treasureFound;
 }
 
 int Player::GetTreasureAmount() const

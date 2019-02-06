@@ -56,8 +56,7 @@ void ClientEnterDungeon(IPAddress client)
 void ClientLeaveDungeon(IPAddress client, UDPSocket* serverSocket)
 {
 	Status sendStatus;
-
-	 sendStatus.status = Disconnect;
+	sendStatus.status = Disconnect;
 
 	for (int i = 0; i < static_cast<int>(players.size()); ++i)
 	{
@@ -87,11 +86,39 @@ void ClientMovePlayer(IPAddress client, int x, int y)
 	}
 }
 
+void ClientGetTreasure(IPAddress client, UDPSocket* serverSocket)
+{
+	bool playerFound = false;
+
+	Status sendStatus;
+	sendStatus.status = TreasureAMT;
+
+	for (int i = 0; i < static_cast<int>(players.size()); ++i)
+	{
+		if (playerFound)
+		{
+			break;
+		}
+
+		if (players[i]->GetClientIP() == client)
+		{
+			if (players[i]->PickupTreasure())
+			{
+				//memcpy_s(sendStatus.payload, MAX_PACKET_SIZE, reinterpret_cast<char*>(players[i]->GetTreasureAmount()), sizeof(sendStatus));
+				break;
+			}
+		}
+	}
+
+	SendUpdatedMap(serverSocket);
+	serverSocket->Send(client, &sendStatus, sizeof(sendStatus));
+}
+
 int main(void)
 {
 	srand(static_cast<unsigned int>(time(NULL)));
 
-	map = Dungeon(10, 10, 20);
+	map = Dungeon(15, 15, 5, 20);
 	map.Draw();
 
 	Winsock::Init();
@@ -127,6 +154,9 @@ int main(void)
 					ClientMovePlayer(senderIP, -1, 0);
 				}
 				break;
+			case GetTreasure:
+				ClientGetTreasure(senderIP, &serverSocket);
+				continue;
 			case LeaveDungeon:
 				ClientLeaveDungeon(senderIP, &serverSocket);
 				break;
@@ -138,7 +168,7 @@ int main(void)
 			}
 			ZeroMemory(&recvCMD, sizeof(recvCMD));
 			SendUpdatedMap(&serverSocket);
-			//map.Draw();
+			map.Draw();
 		}
 	}
 
