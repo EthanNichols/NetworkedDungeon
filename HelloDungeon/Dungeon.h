@@ -91,6 +91,7 @@ public:
 	void Draw();
 	void DrawBorders() const;
 	void DrawTiles() const;
+	void ClearDraw() const;
 
 private:
 

@@ -16,9 +16,11 @@
 UDPSocket* localSocket;
 IPAddress serverIP;
 
+int treasureCount = 0;
 int inputLine = 0;
 bool stopThreads = false;
 #define ENTER_KEY 13
+#define BACKSPACE_KEY 8
 
 void SendCommand(std::string command)
 {
@@ -41,7 +43,7 @@ void SendCommand(std::string command)
 	else if (strcmp(command.substr(0, 4).c_str(), "MOVE") == 0)
 	{
 		sendCMD.cmd = Move;
-		int splitPos = command.find(' ');
+		int splitPos = static_cast<int>(command.find(' '));
 
 		if (splitPos == std::string::npos)
 		{
@@ -84,16 +86,21 @@ void ProcessInput()
 					Console::Print(' ', i, inputLine);
 				}
 
-				Console::Print('\r', -1, inputLine);
 				SendCommand(input);
 				input.clear();
 			}
+			else if (c == BACKSPACE_KEY)
+			{
+				Console::Print(' ', static_cast<int>(input.length()) - 1, inputLine);
+				input = input.substr(0, input.length() - 1);
+			}
 			else
 			{
-				Console::Print('\r', 0, inputLine);
 				input += c;
-				printf("%s", input.c_str());
 			}
+
+			Console::Print(input.c_str(), 0, inputLine);
+
 		}
 	}
 }
@@ -141,12 +148,15 @@ int main(void)
 				stopThreads = true;
 				break;
 			case TreasureAMT:
-				collectTreasureString += std::to_string(reinterpret_cast<int>(recvStatus.payload));
+				collectTreasureString = "Treasure Collected: ";
+				treasureCount += std::stoi(recvStatus.payload, nullptr, 10);
+				collectTreasureString += std::to_string(treasureCount);
 				Console::Print(collectTreasureString.c_str(), 0, inputLine - 2);
 				break;
 			default:
 				break;
 			}
+			Console::Print(' ', 0, inputLine);
 		}
 	}
 

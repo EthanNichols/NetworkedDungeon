@@ -8,6 +8,7 @@
 #include "Packets.h"
 #include "Dungeon.h"
 #include "Player.h"
+#include "ConsolePrint.h"
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -69,8 +70,6 @@ void ClientLeaveDungeon(IPAddress client, UDPSocket* serverSocket)
 		}
 	}
 
-	printf("%d", players.size());
-
 	serverSocket->Send(client, &sendStatus, sizeof(sendStatus));
 }
 
@@ -88,26 +87,28 @@ void ClientMovePlayer(IPAddress client, int x, int y)
 
 void ClientGetTreasure(IPAddress client, UDPSocket* serverSocket)
 {
-	bool playerFound = false;
+	bool treasureFound = false;
 
 	Status sendStatus;
 	sendStatus.status = TreasureAMT;
 
 	for (int i = 0; i < static_cast<int>(players.size()); ++i)
 	{
-		if (playerFound)
-		{
-			break;
-		}
-
 		if (players[i]->GetClientIP() == client)
 		{
 			if (players[i]->PickupTreasure())
 			{
-				//memcpy_s(sendStatus.payload, MAX_PACKET_SIZE, reinterpret_cast<char*>(players[i]->GetTreasureAmount()), sizeof(sendStatus));
+				map.SpawnTreasure(1);
+				std::string treasureStr = std::to_string(players[i]->GetTreasureAmount());
+				strcpy_s(sendStatus.payload, treasureStr.c_str());
+				treasureFound = true;
 				break;
 			}
 		}
+	}
+	if (!treasureFound)
+	{
+		return;
 	}
 
 	SendUpdatedMap(serverSocket);
@@ -156,7 +157,7 @@ int main(void)
 				break;
 			case GetTreasure:
 				ClientGetTreasure(senderIP, &serverSocket);
-				continue;
+				break;
 			case LeaveDungeon:
 				ClientLeaveDungeon(senderIP, &serverSocket);
 				break;

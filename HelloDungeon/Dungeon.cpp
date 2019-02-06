@@ -142,9 +142,20 @@ TileTypes Dungeon::GetTileType(int x, int y)
 void Dungeon::Draw()
 {
 	GetTiles();
-	system("CLS");
+	ClearDraw();
 	DrawBorders();
 	DrawTiles();
+}
+
+void Dungeon::ClearDraw() const
+{
+	for (int x = 0; x < width + 2; ++x)
+	{
+		for (int y = 0; y < width + 2; ++y)
+		{
+			Console::Print(' ', x, y);
+		}
+	}
 }
 
 void Dungeon::DrawBorders() const
