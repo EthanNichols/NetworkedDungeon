@@ -1,6 +1,5 @@
 #include "Player.h"
-
-
+#include <time.h>
 
 Player::Player(IPAddress clientIP, Dungeon* map)
 {
@@ -32,10 +31,7 @@ void Player::Spawn()
 			}
 		}
 	}
-
-	x = 2;
-	y = 1;
-	map->AddTile(TileData(2, 1, TileTypes::PlayerTile));
+	map->AddTile(TileData(x, y, TileTypes::PlayerTile));
 }
 
 IPAddress Player::GetClientIP() const

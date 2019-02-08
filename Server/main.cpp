@@ -41,19 +41,12 @@ void SendUpdatedMap(UDPSocket* serverSocket)
 /// </summary>
 void ClientEnterDungeon(IPAddress client)
 {
-	bool alreadyEntered = false;
-
 	for (int i = 0; i < static_cast<int>(players.size()); ++i)
 	{
 		if (players[i]->GetClientIP() == client)
 		{
-			alreadyEntered = true;
-			break;
+			return;
 		}
-	}
-	if (alreadyEntered)
-	{
-		return;
 	}
 
 	Player* newPlayer = new Player(client, &map);
@@ -182,6 +175,7 @@ int main(void)
 				ClientGetTreasure(senderIP, &serverSocket);
 				break;
 			case LeaveDungeon:
+				Console::Print("Leaving", 30, 0);
 				ClientLeaveDungeon(senderIP, &serverSocket);
 				break;
 			case EnterDungeon:

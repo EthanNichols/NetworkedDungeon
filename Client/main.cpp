@@ -17,6 +17,7 @@
 #define ENTER_KEY 13
 #define BACKSPACE_KEY 8
 
+std::thread inputThread;
 UDPSocket* localSocket;
 IPAddress serverIP;
 
@@ -55,7 +56,7 @@ void SendCommand(std::string command)
 			return;
 		}
 
-		strcpy_s(sendCMD.payload, sizeof(sendCMD.payload), command.substr(splitPos+1, command.length()).c_str());
+		strcpy_s(sendCMD.payload, sizeof(sendCMD.payload), command.substr(splitPos + 1, command.length()).c_str());
 	}
 	else if (strcmp(command.c_str(), "GET TREASURE") == 0)
 	{
@@ -100,7 +101,7 @@ void ProcessInput()
 			}
 			else if (c == BACKSPACE_KEY)
 			{
-				Console::Print(' ', static_cast<int>(input.length()) - 1, inputLine);
+				Console::Print(' ', static_cast<SHORT>(input.length()) - 1, inputLine);
 				input = input.substr(0, input.length() - 1);
 			}
 			else
@@ -117,7 +118,7 @@ void ProcessInput()
 int main(void)
 {
 	// Create the thread to get keyboard input
-	std::thread inputThread(ProcessInput);
+	inputThread = std::thread(ProcessInput);
 
 	std::string collectTreasureString = "Treasure Collected: ";
 
@@ -133,7 +134,6 @@ int main(void)
 	Dungeon map;
 	MapDataPacket mapData;
 
-	Command sendCMD;
 	Status recvStatus;
 
 	bool disconnect = false;
