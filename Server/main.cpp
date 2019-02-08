@@ -15,6 +15,9 @@
 std::vector<Player*> players;
 Dungeon map;
 
+/// <summary>
+/// Send the updated information about the map to each client
+/// </summary>
 void SendUpdatedMap(UDPSocket* serverSocket)
 {
 	Status sendStatus;
@@ -32,6 +35,10 @@ void SendUpdatedMap(UDPSocket* serverSocket)
 	}
 }
 
+/// <summary>
+/// Test if a client hasn't entered the dungeon, and spawn a 
+/// player for the client to move around.
+/// </summary>
 void ClientEnterDungeon(IPAddress client)
 {
 	bool alreadyEntered = false;
@@ -54,6 +61,9 @@ void ClientEnterDungeon(IPAddress client)
 	players.push_back(newPlayer);
 }
 
+/// <summary>
+/// Remove the player that the disconnecting client controlled
+/// </summary>
 void ClientLeaveDungeon(IPAddress client, UDPSocket* serverSocket)
 {
 	Status sendStatus;
@@ -73,6 +83,9 @@ void ClientLeaveDungeon(IPAddress client, UDPSocket* serverSocket)
 	serverSocket->Send(client, &sendStatus, sizeof(sendStatus));
 }
 
+/// <summary>
+/// Move the player the client controls relative to the current position
+/// </summary>
 void ClientMovePlayer(IPAddress client, int x, int y)
 {
 	for (int i = 0; i < static_cast<int>(players.size()); ++i)
@@ -85,6 +98,10 @@ void ClientMovePlayer(IPAddress client, int x, int y)
 	}
 }
 
+/// <summary>
+/// Check adjacent tiles for treasure the player can collect
+/// Also sends a status packet for the collect treasure count
+/// </summary>
 void ClientGetTreasure(IPAddress client, UDPSocket* serverSocket)
 {
 	bool treasureFound = false;
@@ -119,11 +136,14 @@ int main(void)
 {
 	srand(static_cast<unsigned int>(time(NULL)));
 
+	// Create and draw the dungeon
 	map = Dungeon(15, 15, 5, 20);
 	map.Draw();
 
+	// Initialize winsockets
 	Winsock::Init();
 
+	// Create a socket to listen for commands from clients
 	UDPSocket serverSocket = UDPSocket();
 	serverSocket.Open(IPAddress(0, 54000));
 	serverSocket.BlockProgram(false);
@@ -133,8 +153,11 @@ int main(void)
 
 	while (true)
 	{
+		// Test if a command was recieved from a client
 		if (serverSocket.Receive(&recvCMD, sizeof(recvCMD), &senderIP) > 0)
 		{
+
+			// Test the command that the client sent
 			switch (recvCMD.cmd)
 			{
 			case Move:
@@ -167,12 +190,17 @@ int main(void)
 			default:
 				break;
 			}
+
+			// Clear the memory of the recieved packet
 			ZeroMemory(&recvCMD, sizeof(recvCMD));
+
+			// Update the map for each client and the server
 			SendUpdatedMap(&serverSocket);
 			map.Draw();
 		}
 	}
 
+	// Close the recieving socket and shutdown winsockets
 	serverSocket.Close();
 	Winsock::Shutdown();
 

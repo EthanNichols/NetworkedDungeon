@@ -5,6 +5,9 @@
 
 #define MAX_PACKET_SIZE 1400
 
+/// <summary>
+/// List of all of the commands that can be sent
+/// </summary>
 enum Commands
 {
 	GetMapData,
@@ -16,24 +19,36 @@ enum Commands
 	TreasureAMT,
 };
 
+/// <summary>
+/// List of all of the statuses that can be sent
+/// </summary>
 enum Statuses
 {
 	MapData,
 	Disconnect,
 };
 
+/// <summary>
+/// Command packet data struct
+/// </summary>
 struct Command
 {
 	unsigned char cmd;
 	char payload[MAX_PACKET_SIZE];
 };
 
+/// <summary>
+/// Status packet data struct
+/// </summary>
 struct Status
 {
 	unsigned char status;
 	char payload[MAX_PACKET_SIZE];
 };
 
+/// <summary>
+/// Struct that contains information about the map
+/// </summary>
 struct MapDataPacket
 {
 	int width;

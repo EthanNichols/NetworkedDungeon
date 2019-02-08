@@ -13,15 +13,20 @@
 
 #pragma comment (lib, "ws2_32.lib")
 
+// Special character keys
+#define ENTER_KEY 13
+#define BACKSPACE_KEY 8
+
 UDPSocket* localSocket;
 IPAddress serverIP;
 
 int treasureCount = 0;
 int inputLine = 0;
 bool stopThreads = false;
-#define ENTER_KEY 13
-#define BACKSPACE_KEY 8
 
+/// <summary>
+/// Send a command to the server IP
+/// </summary>
 void SendCommand(std::string command)
 {
 	Command sendCMD;
@@ -68,6 +73,10 @@ void SendCommand(std::string command)
 	localSocket->Send(serverIP, &sendCMD, MAX_PACKET_SIZE);
 }
 
+/// <summary>
+/// Seperate thread that checks for keyboard input to 
+/// create a string for the command that will be sent
+/// </summary>
 void ProcessInput()
 {
 	std::string input;
@@ -107,12 +116,15 @@ void ProcessInput()
 
 int main(void)
 {
+	// Create the thread to get keyboard input
 	std::thread inputThread(ProcessInput);
 
 	std::string collectTreasureString = "Treasure Collected: ";
 
+	// Initialize winsockets
 	Winsock::Init();
 
+	// Setup the client socket, and the server IP address
 	serverIP = IPAddress(127, 0, 0, 1, 54000);
 	UDPSocket clientSocket = UDPSocket();
 	localSocket = &clientSocket;
@@ -123,16 +135,19 @@ int main(void)
 
 	Command sendCMD;
 	Status recvStatus;
-	sendCMD.cmd = EnterDungeon;
 
 	bool disconnect = false;
 
+	// Run while the client hasn't disconnected
 	while (!disconnect)
 	{
 		ZeroMemory(&recvStatus, sizeof(recvStatus));
 
+		// Test if a status was recieved from the server
 		if (clientSocket.Receive(&recvStatus, sizeof(recvStatus), NULL) > 0)
 		{
+
+			// Test the status that the server sent
 			switch (recvStatus.status)
 			{
 			case MapData:
@@ -160,6 +175,7 @@ int main(void)
 		}
 	}
 
+	// Join threads, close sockets, and shutdown winsockets
 	inputThread.join();
 	clientSocket.Close();
 	Winsock::Shutdown();

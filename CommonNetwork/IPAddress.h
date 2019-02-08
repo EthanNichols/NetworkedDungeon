@@ -3,6 +3,9 @@
 #include <stdint.h>
 #include <string>
 
+/// <summary>
+/// Helper class that makes handling IP addresses easier.
+/// </summary>
 class IPAddress
 {
 public:
@@ -19,14 +22,39 @@ public:
 	void SetD(int d);
 	void SetIPPort(int port);
 
+	/// <summary>
+	/// Get the IP address as an int of all the bit shifted adress values
+	/// </summary>
 	int GetAddress() const;
+	/// <summary>
+	/// Get the first value of the IP address
+	/// </summary>
 	int GetA() const;
+	/// <summary>
+	/// Get the second value of the IP address
+	/// </summary>
 	int GetB() const;
+	/// <summary>
+	/// Get the third value of the IP address
+	/// </summary>
 	int GetC() const;
+	/// <summary>
+	/// Get the forth value of the IP address
+	/// </summary>
 	int GetD() const;
+	/// <summary>
+	/// Get the port of the IP address
+	/// </summary>
 	int GetPort() const;
+
+	/// <summary>
+	/// Get the string version of an IP address without the port
+	/// </summary>
 	std::string ToString() const;
 
+	/// <summary>
+	/// Compare if the IP address and port match another IPAddress
+	/// </summary>
 	int operator==(IPAddress rhs);
 
 private:
@@ -34,4 +62,5 @@ private:
 	int port;
 };
 
+// Include inline functions file
 #include "IPAddress.inl"
