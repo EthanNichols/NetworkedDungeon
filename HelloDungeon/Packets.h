@@ -54,7 +54,7 @@ struct MapDataPacket
 	int width;
 	int height;
 	int tilesSent;
-	TileData tiles[32];
+	TileData tiles[64];
 
 	MapDataPacket()
 	{

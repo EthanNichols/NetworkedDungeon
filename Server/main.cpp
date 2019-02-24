@@ -121,7 +121,6 @@ void ClientGetTreasure(IPAddress client, UDPSocket* serverSocket)
 		return;
 	}
 
-	SendUpdatedMap(serverSocket);
 	serverSocket->Send(client, &sendStatus, sizeof(sendStatus));
 }
 
@@ -130,7 +129,7 @@ int main(void)
 	srand(static_cast<unsigned int>(time(NULL)));
 
 	// Create and draw the dungeon
-	map = Dungeon(15, 15, 5, 20);
+	map = Dungeon(15, 15, 5, 15);
 	map.Draw();
 
 	// Initialize winsockets
@@ -174,8 +173,12 @@ int main(void)
 			case GetTreasure:
 				ClientGetTreasure(senderIP, &serverSocket);
 				break;
+			case TreasureAMT:
+				Status sendStatus;
+				sendStatus.status = TreasureAMT;
+				serverSocket.Send(senderIP, &sendStatus, sizeof(sendStatus));
+				break;
 			case LeaveDungeon:
-				Console::Print("Leaving", 30, 0);
 				ClientLeaveDungeon(senderIP, &serverSocket);
 				break;
 			case EnterDungeon:
