@@ -1,26 +1,46 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2037
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Server\Server.vcxproj", "{CB822CE9-511D-44AB-B5A2-0A4D764223C8}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonNetwork", "CommonNetwork\CommonNetwork.vcxitems", "{E1276B1A-0DB0-4A22-9A80-B12F5EF2281A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{D1F0F943-1AE6-4117-BF85-38CC37A964B9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Client\Networking.vcxproj", "{3D7998A2-78E9-4860-93DB-25EA2A597740}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Port from C++ to C", "Port from C++ to C", "{F3507BE2-DBF1-4EB8-8C39-971E21DADEEB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloDungeon", "HelloDungeon\HelloDungeon.vcxitems", "{AA3A9856-92C1-48D4-94E6-23D17F252D60}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Original C++", "Original C++", "{A3990B63-D1ED-4AE2-8FB8-53E5FF009554}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Port From C++ To C\Server\Server.vcxproj", "{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Port From C++ To C\Client\Networking.vcxproj", "{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonNetwork", "Port From C++ To C\CommonNetwork\CommonNetwork.vcxitems", "{4E2E5A0A-776E-4A97-99DD-12BF5B70F291}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloDungeon", "Port From C++ To C\HelloDungeon\HelloDungeon.vcxitems", "{6A3E37A2-22AA-423A-B5AE-1B02C692C743}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared Projects", "Shared Projects", "{7D6536C1-20B1-4AE4-BA1F-D635AAD6DE29}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CommonNetwork", "Original C++\CommonNetwork\CommonNetwork.vcxitems", "{E1276B1A-0DB0-4A22-9A80-B12F5EF2281A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HelloDungeon", "Original C++\HelloDungeon\HelloDungeon.vcxitems", "{AA3A9856-92C1-48D4-94E6-23D17F252D60}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client", "Original C++\Client\Networking.vcxproj", "{3D7998A2-78E9-4860-93DB-25EA2A597740}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server", "Original C++\Server\Server.vcxproj", "{CB822CE9-511D-44AB-B5A2-0A4D764223C8}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		CommonNetwork\CommonNetwork.vcxitems*{3d7998a2-78e9-4860-93db-25ea2a597740}*SharedItemsImports = 4
-		HelloDungeon\HelloDungeon.vcxitems*{3d7998a2-78e9-4860-93db-25ea2a597740}*SharedItemsImports = 4
-		HelloDungeon\HelloDungeon.vcxitems*{aa3a9856-92c1-48d4-94e6-23d17f252d60}*SharedItemsImports = 9
-		CommonNetwork\CommonNetwork.vcxitems*{cb822ce9-511d-44ab-b5a2-0a4d764223c8}*SharedItemsImports = 4
-		HelloDungeon\HelloDungeon.vcxitems*{cb822ce9-511d-44ab-b5a2-0a4d764223c8}*SharedItemsImports = 4
-		CommonNetwork\CommonNetwork.vcxitems*{e1276b1a-0db0-4a22-9a80-b12f5ef2281a}*SharedItemsImports = 9
+		Port From C++ To C\CommonNetwork\CommonNetwork.vcxitems*{19b9985e-a21b-4f71-8b60-e9cbec6d2108}*SharedItemsImports = 4
+		Port From C++ To C\HelloDungeon\HelloDungeon.vcxitems*{19b9985e-a21b-4f71-8b60-e9cbec6d2108}*SharedItemsImports = 4
+		Original C++\CommonNetwork\CommonNetwork.vcxitems*{3d7998a2-78e9-4860-93db-25ea2a597740}*SharedItemsImports = 4
+		Original C++\HelloDungeon\HelloDungeon.vcxitems*{3d7998a2-78e9-4860-93db-25ea2a597740}*SharedItemsImports = 4
+		Port From C++ To C\CommonNetwork\CommonNetwork.vcxitems*{4e2e5a0a-776e-4a97-99dd-12bf5b70f291}*SharedItemsImports = 9
+		Port From C++ To C\HelloDungeon\HelloDungeon.vcxitems*{6a3e37a2-22aa-423a-b5ae-1b02c692c743}*SharedItemsImports = 9
+		Port From C++ To C\CommonNetwork\CommonNetwork.vcxitems*{809db6d7-9de4-4b59-9ef4-370dafa48fc0}*SharedItemsImports = 4
+		Port From C++ To C\HelloDungeon\HelloDungeon.vcxitems*{809db6d7-9de4-4b59-9ef4-370dafa48fc0}*SharedItemsImports = 4
+		Original C++\HelloDungeon\HelloDungeon.vcxitems*{aa3a9856-92c1-48d4-94e6-23d17f252d60}*SharedItemsImports = 9
+		Original C++\CommonNetwork\CommonNetwork.vcxitems*{cb822ce9-511d-44ab-b5a2-0a4d764223c8}*SharedItemsImports = 4
+		Original C++\HelloDungeon\HelloDungeon.vcxitems*{cb822ce9-511d-44ab-b5a2-0a4d764223c8}*SharedItemsImports = 4
+		Original C++\CommonNetwork\CommonNetwork.vcxitems*{e1276b1a-0db0-4a22-9a80-b12f5ef2281a}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -29,14 +49,22 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x64.ActiveCfg = Debug|x64
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x64.Build.0 = Debug|x64
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x86.ActiveCfg = Debug|Win32
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x86.Build.0 = Debug|Win32
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x64.ActiveCfg = Release|x64
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x64.Build.0 = Release|x64
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x86.ActiveCfg = Release|Win32
-		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x86.Build.0 = Release|Win32
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Debug|x64.ActiveCfg = Debug|x64
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Debug|x64.Build.0 = Debug|x64
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Debug|x86.ActiveCfg = Debug|Win32
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Debug|x86.Build.0 = Debug|Win32
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Release|x64.ActiveCfg = Release|x64
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Release|x64.Build.0 = Release|x64
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Release|x86.ActiveCfg = Release|Win32
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108}.Release|x86.Build.0 = Release|Win32
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Debug|x64.ActiveCfg = Debug|x64
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Debug|x64.Build.0 = Debug|x64
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Debug|x86.ActiveCfg = Debug|Win32
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Debug|x86.Build.0 = Debug|Win32
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Release|x64.ActiveCfg = Release|x64
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Release|x64.Build.0 = Release|x64
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Release|x86.ActiveCfg = Release|Win32
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0}.Release|x86.Build.0 = Release|Win32
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Debug|x64.ActiveCfg = Debug|x64
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Debug|x64.Build.0 = Debug|x64
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Debug|x86.ActiveCfg = Debug|Win32
@@ -45,13 +73,29 @@ Global
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Release|x64.Build.0 = Release|x64
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Release|x86.ActiveCfg = Release|Win32
 		{3D7998A2-78E9-4860-93DB-25EA2A597740}.Release|x86.Build.0 = Release|Win32
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x64.ActiveCfg = Debug|x64
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x64.Build.0 = Debug|x64
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x86.ActiveCfg = Debug|Win32
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Debug|x86.Build.0 = Debug|Win32
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x64.ActiveCfg = Release|x64
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x64.Build.0 = Release|x64
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x86.ActiveCfg = Release|Win32
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{D1F0F943-1AE6-4117-BF85-38CC37A964B9} = {A3990B63-D1ED-4AE2-8FB8-53E5FF009554}
+		{19B9985E-A21B-4F71-8B60-E9CBEC6D2108} = {F3507BE2-DBF1-4EB8-8C39-971E21DADEEB}
+		{809DB6D7-9DE4-4B59-9EF4-370DAFA48FC0} = {F3507BE2-DBF1-4EB8-8C39-971E21DADEEB}
+		{4E2E5A0A-776E-4A97-99DD-12BF5B70F291} = {7D6536C1-20B1-4AE4-BA1F-D635AAD6DE29}
+		{6A3E37A2-22AA-423A-B5AE-1B02C692C743} = {7D6536C1-20B1-4AE4-BA1F-D635AAD6DE29}
+		{7D6536C1-20B1-4AE4-BA1F-D635AAD6DE29} = {F3507BE2-DBF1-4EB8-8C39-971E21DADEEB}
 		{E1276B1A-0DB0-4A22-9A80-B12F5EF2281A} = {D1F0F943-1AE6-4117-BF85-38CC37A964B9}
 		{AA3A9856-92C1-48D4-94E6-23D17F252D60} = {D1F0F943-1AE6-4117-BF85-38CC37A964B9}
+		{3D7998A2-78E9-4860-93DB-25EA2A597740} = {A3990B63-D1ED-4AE2-8FB8-53E5FF009554}
+		{CB822CE9-511D-44AB-B5A2-0A4D764223C8} = {A3990B63-D1ED-4AE2-8FB8-53E5FF009554}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {752ADDA7-C5D6-4694-9B06-DE882A730618}

@@ -56,8 +56,8 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="Shared">
-    <Import Project="..\CommonNetwork\CommonNetwork.vcxitems" Label="Shared" />
     <Import Project="..\HelloDungeon\HelloDungeon.vcxitems" Label="Shared" />
+    <Import Project="..\CommonNetwork\CommonNetwork.vcxitems" Label="Shared" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -73,22 +73,22 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)_Builds\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_DELETE\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)_Builds\C++\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_DELETE\C++\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)_Builds\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_DELETE\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)_Builds\C++\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_DELETE\C++\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)_Builds\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_DELETE\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)_Builds\C++\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_DELETE\C++\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
     <TargetName>$(ProjectName)_d</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)_Builds\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(SolutionDir)_DELETE\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(SolutionDir)_Builds\C++\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(SolutionDir)_DELETE\C++\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
